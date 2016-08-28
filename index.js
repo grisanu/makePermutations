@@ -8,38 +8,45 @@ var makePermutations = function (stringOrArray, number, repetition) {
   repetition = repetition || false;
   if (repetition.constructor !== Boolean) { throw new Error('Repetition must be a boolean value'); }
 
+  /**
+  * Code
+  */
 
-  if (!repetition) {
-    // change str to arr
-    var input = stringOrArray.constructor === String ? stringOrArray.split('') : stringOrArray;
+  // change str to arr
+  var input = stringOrArray.constructor === String ? stringOrArray.split('') : stringOrArray;
 
-    // base case
-    if (number === 1) {
-      return input;
+  // base case
+  if (number === 1) {
+    return input;
+  }
+
+  // all perm
+  var results = [];
+
+  // set anchor
+  input.forEach(function (char, index, arr) {
+    var anchor = char;
+    var subArr = arr.slice();
+
+    if (!repetition) {
+      subArr.splice(index, 1);
     }
 
-    // all perm
-    var results = [];
+    var subPerm = makePermutations(subArr, number - 1, repetition);
 
-    // set anchor
-    input.forEach(function (char, index, arr) {
-      var anchor = char;
-      var subArr = arr.slice();
-      subArr.splice(index, 1);
-      var subPerm = makePermutations(subArr, number - 1);
-
-      // concat anchor to front of all sub perm
-      subPerm.forEach(function (element) {
-        results.push(anchor.concat(element));
-      });
+    // concat anchor to front of all sub perm
+    subPerm.forEach(function (element) {
+      results.push(anchor.concat(element));
     });
+  });
 
-    // return array of all possible permutations
-    return results;
-  }
+  // return array of all possible permutations
+  return results;
 };
 
-console.log(makePermutations('abc', 2)); // [ 'ab', 'ac', 'ba', 'bc', 'ca', 'cb' ]
-console.log(makePermutations('abcd', 2, false)); //  [ 'ab', 'ac', 'ad', 'ba', 'bc', 'bd', 'ca', 'cb', 'cd', 'da', 'db', 'dc' ]
-console.log(makePermutations('abc', 3, false)); // [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
-console.log(makePermutations('abcd', 4, false)); // [ 'abcd', 'abdc', 'acbd', 'acdb', 'adbc', 'adcb', 'bacd', 'badc', 'bcad', 'bcda', 'bdac', 'bdca', 'cabd', 'cadb', 'cbad', 'cbda', 'cdab', 'cdba', 'dabc', 'dacb', 'dbac', 'dbca', 'dcab', 'dcba' ]
+// console.log(makePermutations('abc', 2)); // [ 'ab', 'ac', 'ba', 'bc', 'ca', 'cb' ]
+// console.log(makePermutations('abc', 2, true)); // [ 'aa', 'ab', 'ac', 'ba', 'bb', 'bc', 'ca', 'cb', 'cc' ]
+// console.log(makePermutations('abcd', 2, false)); //  [ 'ab', 'ac', 'ad', 'ba', 'bc', 'bd', 'ca', 'cb', 'cd', 'da', 'db', 'dc' ]
+// console.log(makePermutations('abc', 3, false)); // [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
+// console.log(makePermutations('abc', 3, true)); //
+// console.log(makePermutations('abcd', 4, false)); // [ 'abcd', 'abdc', 'acbd', 'acdb', 'adbc', 'adcb', 'bacd', 'badc', 'bcad', 'bcda', 'bdac', 'bdca', 'cabd', 'cadb', 'cbad', 'cbda', 'cdab', 'cdba', 'dabc', 'dacb', 'dbac', 'dbca', 'dcab', 'dcba' ]
