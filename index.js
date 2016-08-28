@@ -3,7 +3,7 @@ var makePermutations = function (stringOrArray, number, repetition) {
     throw new Error('Collection must either be a String or an Array');
   }
   if (!Number.isInteger(number)) { throw new Error('Selection size must be an integer'); }
-  if (number <= 0 || number > stringOrArray.length) { throw new Error('Selection size must be greater than 0 and less than collection size'); }
+  if (number <= 0 || number > stringOrArray.length) { return []; }
 
   repetition = repetition || false;
   if (repetition.constructor !== Boolean) { throw new Error('Repetition must be a boolean value'); }
