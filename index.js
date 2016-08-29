@@ -1,3 +1,5 @@
+'use strict';
+
 var makePermutations = function (stringOrArray, number, repetition) {
   if (stringOrArray.constructor !== String && stringOrArray.constructor !== Array) {
     throw new Error('Collection must either be a String or an Array');
